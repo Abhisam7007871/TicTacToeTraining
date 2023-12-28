@@ -2,10 +2,12 @@ package com.mygame;
 
 import javax.swing.*;
 import java.awt.*;
-
+import java.util.Date;
+@SuppressWarnings("InfiniteLoopStatement")
 public class MyGame extends JFrame {
-    JLabel heading;
-    Font font = new Font("",Font.PLAIN,40);
+    JLabel heading,clockLabel;
+    Font font = new Font("",Font.BOLD,40);
+
     MyGame(){
         System.out.println("Creating Instance of Game");
         setTitle("My Tic Tac Toe Game...");
@@ -26,8 +28,33 @@ public class MyGame extends JFrame {
 
         heading = new JLabel("Tic Tac Toe");
         heading.setFont(font);
+        heading.setHorizontalAlignment(SwingConstants.CENTER);
 
         this.add(heading, BorderLayout.NORTH);
+
+        // creating object of JLable for clock //
+
+        clockLabel = new JLabel("Clock");
+        clockLabel.setFont(font);
+        clockLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        this.add(clockLabel, BorderLayout.SOUTH);
+
+        Thread t = new Thead(){
+            public void run(){
+                try{
+                    while(true){
+                        String datetime = new Date().toLocaleString();
+
+                        clockLabel.setText(datetime);
+
+                        Thread.sleep(1000);
+                    }
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+        };
+        t.start();
 
 
     }
