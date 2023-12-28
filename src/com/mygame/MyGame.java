@@ -54,7 +54,7 @@ public class MyGame extends JFrame {
             public void run(){
                 try{
                     while(true){
-                        String datetime = new Date().toLocaleString();
+                        String datetime = new Date().toString();
 
                         clockLabel.setText(datetime);
 
