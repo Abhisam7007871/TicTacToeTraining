@@ -2,14 +2,21 @@ package com.mygame;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Date;
 @SuppressWarnings("InfiniteLoopStatement")
-public class MyGame extends JFrame {
+public class MyGame extends JFrame implements ActionListener {
     JLabel heading,clockLabel;
     Font font = new Font("",Font.BOLD,40);
     JPanel mainPanel;
 
     JButton []btns = new JButton[9];
+
+    // games instancevariable ///
+
+    int[] gameChances = {2,2,2,2,2,2,2,2,2};
+    int activePlayer = 0;
 
     MyGame(){
         System.out.println("Creating Instance of Game");
@@ -75,15 +82,46 @@ public class MyGame extends JFrame {
 
         for(int i = 1; i<= 9; i++){
             JButton btn = new JButton();
-            btn.setIcon(new ImageIcon("F:/Projects/Java Projects/TicTacToeTraining/src/img/1.png"));
+            // btn.setIcon(new ImageIcon("F:/Projects/Java Projects/TicTacToeTraining/src/img/1.png"));
             btn.setBackground(Color.decode("#07b8ab"));
 
             btn.setFont(font);
             mainPanel.add(btn);
             btns[i-1] = btn;
+            btn.addActionListener(this);
+            btn.setName(String.valueOf(i-1));
         }
 
         this.add(mainPanel,BorderLayout.CENTER);
+
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        JButton currentButton = (JButton)e.getSource();
+
+        String nameStr = currentButton.getName();
+
+
+        int name = Integer.parseInt(nameStr.trim());
+
+        if(gameChances[name] == 2){
+            if(activePlayer == 1){
+                currentButton.setIcon(new ImageIcon("src/img/1.png"));
+
+                gameChances[name]=activePlayer;
+                activePlayer=0;
+            }else{
+                currentButton.setIcon(new ImageIcon("src/img/0.png"));
+
+                gameChances[name]=activePlayer;
+                activePlayer=1;
+            }
+        }else{
+            JOptionPane.showMessageDialog(this, "Position already occupied");
+        }
+
+
 
     }
 }
