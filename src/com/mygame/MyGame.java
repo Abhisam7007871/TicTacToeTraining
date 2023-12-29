@@ -18,6 +18,19 @@ public class MyGame extends JFrame implements ActionListener {
     int[] gameChances = {2,2,2,2,2,2,2,2,2};
     int activePlayer = 0;
 
+    int wps[][]= {
+            {0,1,2},
+            {3,4,5},
+            {6,7,8},
+            {0,3,6},
+            {1,4,7},
+            {2,5,8},
+            {0,4,8},
+            {2,4,6}
+    };
+    int winner = 2;
+
+
     MyGame(){
         System.out.println("Creating Instance of Game");
         setTitle("My Tic Tac Toe Game...");
@@ -117,6 +130,32 @@ public class MyGame extends JFrame implements ActionListener {
                 gameChances[name]=activePlayer;
                 activePlayer=1;
             }
+
+            //  find the winner.......... //
+
+            for(int []temp:wps){
+                if((gameChances[temp[0]]==gameChances[temp[1]]) && (gameChances[temp[1]] == gameChances[temp[2]]) && gameChances[temp[2]] != 2){
+                    winner = gameChances[temp[0]];
+                    JOptionPane.showMessageDialog(null,"Player "+ winner + " has won the game..");
+                    int i = JOptionPane.showConfirmDialog(this, " do you want to play more ??");
+                    if(i==0){
+                        this.setVisible(false);
+                        new MyGame();
+                    } else if (i==1) {
+                        System.exit(2342);
+                    }else{
+                        System.exit(2342);
+                    }
+                    System.out.println(i);
+                    break;
+
+                }
+            }
+
+
+
+
+
         }else{
             JOptionPane.showMessageDialog(this, "Position already occupied");
         }
