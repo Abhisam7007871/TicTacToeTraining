@@ -30,6 +30,8 @@ public class MyGame extends JFrame implements ActionListener {
     };
     int winner = 2;
 
+    boolean gameOver = false;
+
 
     MyGame(){
         System.out.println("Creating Instance of Game");
@@ -118,6 +120,11 @@ public class MyGame extends JFrame implements ActionListener {
 
         int name = Integer.parseInt(nameStr.trim());
 
+        if(gameOver == true){
+            JOptionPane.showMessageDialog(this, "Game Already Over");
+            return;
+        }
+
         if(gameChances[name] == 2){
             if(activePlayer == 1){
                 currentButton.setIcon(new ImageIcon("src/img/1.png"));
@@ -136,6 +143,8 @@ public class MyGame extends JFrame implements ActionListener {
             for(int []temp:wps){
                 if((gameChances[temp[0]]==gameChances[temp[1]]) && (gameChances[temp[1]] == gameChances[temp[2]]) && gameChances[temp[2]] != 2){
                     winner = gameChances[temp[0]];
+                    gameOver=true;
+
                     JOptionPane.showMessageDialog(null,"Player "+ winner + " has won the game..");
                     int i = JOptionPane.showConfirmDialog(this, " do you want to play more ??");
                     if(i==0){
@@ -152,6 +161,33 @@ public class MyGame extends JFrame implements ActionListener {
                 }
             }
 
+            // Draw Logic .....   //
+
+            int counter = 0;
+            for(int x:gameChances){
+                if(x == 2){
+                    counter++;
+                    break;
+                }
+            }
+
+            if (counter ==0 && gameOver==false){
+                JOptionPane.showMessageDialog(null, " Its Draw...");
+
+                int i =JOptionPane.showConfirmDialog(this, " Play More..");
+                if(i==0){
+                    this.setVisible(false);
+
+                    new MyGame();
+                } else if (i==1) {
+                    System.exit(23234);
+                }else{
+
+                }
+
+                gameOver=true;
+
+            }
 
 
 
